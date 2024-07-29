@@ -80,8 +80,21 @@ public class Library {
      * @return The list of students that match the search criteria. Returns null if search type is title or author.
      */
     public ArrayList<Student> searchStudents(SearchByType searchByType, ArrayList<Object> keys) {
-        // TODO complete function
-        return null;
+        ArrayList<Student> result = new ArrayList<>();
+        if(searchByType.equals(SearchByType.TITLE) || searchByType.equals(SearchByType.AUTHOR)){
+            return null;
+        }
+
+        for(Student temp : this.students){
+            if(searchByType.equals(SearchByType.ID)){
+                int tempId = Integer.parseInt(temp.toString().replaceAll("([a-z0-9]*[|])", ""));
+                if(keys.contains(tempId)) result.add(temp);
+            }else{
+                String tempName = temp.getName();
+                if(keys.contains(tempName)) result.add(temp);
+            }
+        }
+        return result;
     }
 
     /**
@@ -93,8 +106,26 @@ public class Library {
      * @return The list of books that match the search criteria. Returns null if search type is name.
      */
     public ArrayList<Book> searchBooks(SearchByType searchByType, ArrayList<Object> keys) {
-        // TODO complete function
-        return null;
+        if(searchByType.equals(SearchByType.NAME)) return null;
+
+        ArrayList<Book> result = new ArrayList<>();
+        for(Book temp : this.books){
+            switch (searchByType){
+                case ID:
+                    int tempId = temp.getId();
+                    if(keys.contains(tempId)) result.add(temp);
+                    break;
+                case TITLE:
+                    String title = temp.getTitle();
+                    if(keys.contains(title)) result.add(temp);
+                    break;
+                case AUTHOR:
+                    String author = temp.getAuthor();
+                    if(keys.contains(author)) result.add(temp);
+                    break;
+            }
+        }
+        return result;
     }
 
     /**
